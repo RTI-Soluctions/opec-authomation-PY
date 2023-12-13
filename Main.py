@@ -1,16 +1,12 @@
-import csv
 from Class.ReadLogs import ReadLogs
-
-
 
 campaign = "Live"
 
-pathFile = "logs/"
+pathLogFiles = "logs/"
 
-fileLog = pathFile + '2023-07-31.log'
+fileLog = pathLogFiles + '2023-07-31.log'
 
 teste = ReadLogs()
 
 teste.campaignExtractor(fileLog, campaign)
-
 
