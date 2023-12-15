@@ -19,13 +19,12 @@ menuBar = Menu(app)
 menuFile = Menu(menuBar, tearoff=0)
 menuFile.add_command(label="Novo PI", command=on_option_selected)
 menuFile.add_command(label="Novo Cliente", command=on_option_selected)
-menuFile.add_command(label="Salvar", command=on_option_selected)
-menuFile.add_command(label="Salvar Como", command=on_option_selected)
-menuFile.add_command(label="Gerar Relatório", command=on_option_selected)
 menuFile.add_separator()
-menuFile.add_command(label="Sair", command=app.quit)
+menuFile.add_command(label="Gerar Relatório", command=on_option_selected)
 menuBar.add_cascade(label="Arquivo", menu=menuFile)
+
 
 
 app.config(menu=menuBar)
 app.mainloop()
+
