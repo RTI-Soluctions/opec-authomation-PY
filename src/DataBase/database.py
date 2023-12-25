@@ -25,7 +25,7 @@ USER_SQL_QUERY = """CREATE TABLE users(
     EMAIL VARCHAR(50),
     PASSWORD VARCHAR(50),
     CPF VARCHAR(14),
-    TIMESTAMP
+    TIMESTAMP DATE
 );"""
 
 CLIENT_SQL_QUERY = """CREATE TABLE clients(
@@ -40,7 +40,7 @@ CLIENT_SQL_QUERY = """CREATE TABLE clients(
     CITY VARCHAR(30),
     STATE VARCHAR(20),
     CEP VARCHAR(9),
-    TIMESTAMP
+    TIMESTAMP DATE
 );"""
 
 PI_SQL_QUERY = """CREATE TABLE pis(
@@ -52,18 +52,22 @@ PI_SQL_QUERY = """CREATE TABLE pis(
     SPREADSHEET INTEGER,
     START_DATE DATE,
     END_DATE DATE,
-    CLIENT_ID VARCHAR(14),
-    TIMESTAMP
+    GROSS_VALUE FLOAT,
+    NET_VALUE FLOAT,
+    COMMISSION_VALUE FLOAT,
+    CLIENT_ID INTEGER REFERENCES clients(ID),
+    TIMESTAMP DATE 
 );"""
+
 
 def createTable(connection, sql):
     try:
         con = connection.cursor()
         con.execute(sql)
-        print(f"Create table {sql} succesfull")
+        print(f"Create table succesfull")
 
     except Error as err:
-        print(f"ERROR Create Table {sql} --->", err)
+        print(f"ERROR Create Table --->", err)
 
 
 createTable(vconnect, USER_SQL_QUERY)
