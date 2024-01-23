@@ -1,44 +1,58 @@
-import csv
+import os
 import openpyxl
+from datetime import datetime
 
-campaign1 = "Live"
+campaign1 = "PI 70485"
 
 pathLogFiles = "src/logs/"
 
-fileLog = pathLogFiles + "2023-07-31.log"
+actual_date = datetime.now()
+
+date_format = " %H:%M:%S de %d/%m/%YY"
+
+organized_date = actual_date.strftime(date_format)
 
 
-def campaignExtractor(fileLog, campaign):
+def campaignExtractor(campaign):
     exibitionList = []
 
-    with open(fileLog, "r", encoding="utf-16-le") as arquivo:
-        linhas = arquivo.readlines()
+    for file_name in os.listdir(pathLogFiles):
+        fileLog = os.path.join(pathLogFiles, file_name)
 
-    lineList = [x.strip("\n") for x in linhas]
+        if fileLog.endswith(".log"):
+            with open(fileLog, "r", encoding="utf-16-le") as arquivo:
+                linhas = arquivo.readlines()
 
-    for linha in lineList:
-        if campaign in linha:
-            line = linha.split("\t")
-            exibitionList.append(line)
+            lineList = [word.strip("\n") for word in linhas]
 
-    nome_arquivo = "Planilha.xlsx"
+            for linha in lineList:
+                if campaign in linha:
+                    line = linha.split("\t")
+                    exibitionList.append(line)
 
-    workbook = openpyxl.Workbook()
+    final_file = "Report_Template.xlsx"
 
-    sheet = workbook.active
+    def insertDataIntoCells(sheet, dados, start_line, start_column):
+        sheet.cell(row=3, column=4, value=organized_date)
 
-    for line in exibitionList:
-        sheet.append(line)
+        for i, linha in enumerate(dados):
+            for j, valor in enumerate(linha):
+                sheet.cell(row=start_line + i, column=start_column + j, value=valor)
 
-    workbook.save(nome_arquivo)
+    workbook = openpyxl.load_workbook(final_file)
 
-    print(f"O array foi inserido no arquivo {nome_arquivo} com sucesso.")
+    sheet = workbook.worksheets[0]
 
-    print(exibitionList)
+    start_line = 10
+    start_column = 2
+
+    insertDataIntoCells(sheet, exibitionList, start_line, start_column)
+
+    workbook.save(f"Report_Template.xlsx")
+
+    print(f"Relatório {final_file} atualizado com sucesso.")
 
 
-# teste.campaignExtractor(fileLog, campaign)
-
-campaignExtractor(fileLog, campaign1)
+campaignExtractor(campaign1)
 
 # window.mainloop()
