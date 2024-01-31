@@ -1,58 +1,35 @@
+import customtkinter
 import os
-import openpyxl
-from datetime import datetime
-
-campaign1 = "PI 70485"
-
-pathLogFiles = "src/logs/"
-
-actual_date = datetime.now()
-
-date_format = " %H:%M:%S de %d/%m/%YY"
-
-organized_date = actual_date.strftime(date_format)
+from PIL import Image
 
 
-def campaignExtractor(campaign):
-    exibitionList = []
+class App(customtkinter.CTk):
+    def __init__(self):
+        super().__init__()
 
-    for file_name in os.listdir(pathLogFiles):
-        fileLog = os.path.join(pathLogFiles, file_name)
+        self.title("Opec Automation")
+        self.geometry("1280x720")
 
-        if fileLog.endswith(".log"):
-            with open(fileLog, "r", encoding="utf-16-le") as arquivo:
-                linhas = arquivo.readlines()
+        self.grid_rowconfigure(0, weigth=1)
+        self.grid_columnconfigure(1, weigth=1)
 
-            lineList = [word.strip("\n") for word in linhas]
-
-            for linha in lineList:
-                if campaign in linha:
-                    line = linha.split("\t")
-                    exibitionList.append(line)
-
-    final_file = "Report_Template.xlsx"
-
-    def insertDataIntoCells(sheet, dados, start_line, start_column):
-        sheet.cell(row=3, column=4, value=organized_date)
-
-        for i, linha in enumerate(dados):
-            for j, valor in enumerate(linha):
-                sheet.cell(row=start_line + i, column=start_column + j, value=valor)
-
-    workbook = openpyxl.load_workbook(final_file)
-
-    sheet = workbook.worksheets[0]
-
-    start_line = 10
-    start_column = 2
-
-    insertDataIntoCells(sheet, exibitionList, start_line, start_column)
-
-    workbook.save(f"Report_Template.xlsx")
-
-    print(f"Relatório {final_file} atualizado com sucesso.")
+        image_path = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "src/img"
+        )
+        self.small_logo = customtkinter.CTkImage(
+            Image.open(os.path.join(image_path, "small_logo.png")),
+            size=(26, 26),
+        )
+        self.banner_home = customtkinter.CTkImage(
+            Image.open(os.path.join(image_path, "banner_home.png")),
+            size=(500, 150),
+        )
+        self.add_user_image = customtkinter.CTkImage(
+            Image.open(os.path.join(image_path, "add_user_image.png")),
+            size=(20, 20),
+        )
 
 
-campaignExtractor(campaign1)
-
-# window.mainloop()
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
