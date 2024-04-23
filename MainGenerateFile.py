@@ -2,9 +2,9 @@ import os
 import openpyxl
 from datetime import datetime
 
-campaign1 = "PI_063782"
+campaign1 = "PI_28706"
 
-pathLogFiles = "src/logs/"
+pathLogFiles = "src/logs-files/"
 
 actual_date = datetime.now()
 
@@ -31,14 +31,14 @@ def campaignExtractor(campaign):
                 if campaign in line:
                     newLine = line.split("\t")
                     dateHourObject = datetime.strptime(newLine[0], "%d-%m-%Y %H:%M:%S")
-                    if dateHourObject.hour == 12:
-                        newLine.append("BR_BIO")
-                    elif dateHourObject.hour == 14 or dateHourObject.hour == 15  or dateHourObject.hour == 16:
-                        newLine.append("QUINTAL")
+                    if dateHourObject.hour == 7:
+                        newLine.append("TJM1ED")
+                    elif dateHourObject.hour == 12 or dateHourObject.hour == 13:
+                        newLine.append("TJM2ED")
                     elif dateHourObject.hour == 19 or dateHourObject.hour == 20:
-                        newLine.append("CHEF")
+                        newLine.append("TJM3ED")
                     else:
-                        newLine.append("RODA_VIVA")
+                        newLine.append("ROTATIVO")
                     exibitionList.append(newLine)
 
     final_file = "Report_Template.xlsx"

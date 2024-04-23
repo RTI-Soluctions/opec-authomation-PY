@@ -2,9 +2,9 @@ import os
 import openpyxl
 from datetime import datetime
 
-campaign1 = "PI67846"
+campaign1 = "PI_28706"
 
-pathLogFiles = "src/logs/"
+pathLogFiles = "src/logs-files/"
 
 actual_date = datetime.now()
 
