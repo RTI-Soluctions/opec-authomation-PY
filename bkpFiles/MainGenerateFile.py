@@ -2,7 +2,7 @@ import os
 import openpyxl
 from datetime import datetime
 
-campaign1 = "PI_28706"
+campaign1 = "PI_35848"
 
 pathLogFiles = "src/logs-files/"
 
@@ -70,4 +70,3 @@ def campaignExtractor(campaign):
 
 campaignExtractor(campaign1)
 
-# window.mainloop()

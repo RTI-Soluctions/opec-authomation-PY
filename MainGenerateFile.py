@@ -2,7 +2,7 @@ import os
 import openpyxl
 from datetime import datetime
 
-campaign1 = "PI_28706"
+campaign1 = "PI_"
 
 pathLogFiles = "src/logs-files/"
 
@@ -38,7 +38,7 @@ def campaignExtractor(campaign):
                     elif dateHourObject.hour == 19 or dateHourObject.hour == 20:
                         newLine.append("TJM3ED")
                     else:
-                        newLine.append("ROTATIVO")
+                        newLine.append("JDC")
                     exibitionList.append(newLine)
 
     final_file = "Report_Template.xlsx"
@@ -65,9 +65,8 @@ def campaignExtractor(campaign):
 
     workbook.save(f"Relatorio de exibicao-{campaign1}.xlsx")
 
-    print(f"Relatorio {final_file} atualizado com sucesso.")
+    print(f"Relatorio de exibicao-{campaign1} gerado com sucesso.")
 
 
 campaignExtractor(campaign1)
 
-# window.mainloop()
